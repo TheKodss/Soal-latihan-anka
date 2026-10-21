@@ -94,6 +94,13 @@ function getAllInputs() {
   return [...document.querySelectorAll('input[type="text"]')];
 }
 
+function clearAnswerPlaceholders() {
+  getAllInputs().forEach((input) => {
+    input.placeholder = '';
+    input.setAttribute('placeholder', '');
+  });
+}
+
 function getFieldLabel(id) {
   const field = document.getElementById(id);
   if (!field) return id;
@@ -353,6 +360,7 @@ function bindEvents() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  clearAnswerPlaceholders();
   hideAnswerPanel();
   loadAnswers();
   bindEvents();
