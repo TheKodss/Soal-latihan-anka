@@ -201,6 +201,44 @@ nav ul {
   color: var(--primary);
 }
 
+.quick-panel {
+  margin-top: 22px;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 12px;
+}
+
+.quick-panel h3 {
+  margin: 0 0 12px;
+  color: var(--primary);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.quick-btn {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--primary);
+  border-radius: 8px;
+  min-height: 36px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.quick-btn:hover {
+  background: #edf5ff;
+  border-color: var(--secondary);
+}
+
 .stats {
   margin-top: 22px;
   background: #f8fafc;
@@ -228,6 +266,19 @@ nav ul {
   margin-top: 10px;
   border-top: 1px solid var(--line);
   font-weight: 700;
+}
+
+.answer-reveal {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.72rem;
+  color: var(--correct);
+  background: var(--correct-bg);
+  border: 1px solid rgba(31, 111, 67, 0.2);
+  border-radius: 999px;
+  padding: 3px 8px;
+  vertical-align: middle;
+  line-height: 1.4;
 }
 
 .info-box {
