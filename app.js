@@ -1,79 +1,63 @@
-const answerKey = {
-  'p1-1': ['HOLD - ROLL'],
-  'p1-2': ['1.2 Vs'],
-  'p1-3': ['FLOAT'],
-  'p1-4': ['RESET'],
-  'p1-5': ['FLOAT'],
-  'p1-6': ['LAND AS SOON AS PRACTICABLE'],
-  'p1-7': ['Left'],
-  'p1-8': ['Left'],
-  'p1-9': ['Right'],
-  'p1-10': ['Right'],
-  'p1-11': ['Right'],
-  'p1-12': ['Right'],
-  'p1-13': ['Left'],
-  'p1-14': ['Left'],
-  'p1-15': ['Verify DEGRADED'],
+const STORAGE_KEY = 'anka_training_answers_v1';
 
-  'p2-1': ['HOLD - THR'],
-  'p2-2': ['Decrease'],
-  'p2-3': ['Adjust'],
-  'p2-4': ['As Required'],
-  'p2-5': ['Check'],
-  'p2-6': ['LAND AS SOON AS PRACTICABLE'],
-  'p2-7': ['LAND AS SOON AS POSSIBLE'],
-  'p2-8': ['Consider DEGRADED'],
-
-  'p3-1': ['HOLD - THR'],
-  'p3-2': ['As Required'],
-  'p3-3': ['On'],
-  'p3-4': ['Consider OFF'],
-  'p3-5': ['LAND AS SOON AS POSSIBLE'],
-  'p3-6': ['DEGRADED'],
-
-  'p4-1': ['FORCE EXT'],
-  'p4-3': ['Decrease'],
-  'p4-4': ['STOW'],
-  'p4-5': ['Consider POS 1 or POS 2'],
-  'p4-6': ['CUT, at Touchdown'],
-  'p4-7': ['Consider BACKUP at Touchdown'],
-  'p4-8': ['As Required']
+const state = {
+  showingAnswers: false,
+  mode: 'training'
 };
-
-let showingAnswers = false;
 
 function normalize(value) {
   return String(value || '')
+    .replace(/\u00A0/g, ' ')
     .trim()
     .toLowerCase()
-    .replace(/\s+/g, ' ')
-    .replace(/[\u00A0]/g, ' ')
-    .replace(/[-_]/g, ' ')
+    .replace(/[_-]/g, ' ')
     .replace(/,/g, '.')
-    .replace(/\./g, '');
+    .replace(/\./g, '')
+    .replace(/\s+/g, ' ');
 }
 
 function getAllInputs() {
-  return [...document.querySelectorAll('input[type="text"]')];
+  return [...document.querySelectorAll('.answer-input')];
 }
 
-function updateProgress() {
-  const inputs = getAllInputs();
-  const answered = inputs.filter((input) => input.value.trim() !== '').length;
-  const value = inputs.length ? Math.round((answered / inputs.length) * 100) : 0;
+function setMode(mode) {
+  state.mode = mode;
+  document.body.dataset.mode = mode;
 
-  const statBenar = document.getElementById('stat-benar');
-  const statSalah = document.getElementById('stat-salah');
-  const statKosong = document.getElementById('stat-kosong');
-  const statNilai = document.getElementById('stat-nilai');
+  document.querySelectorAll('.mode-btn').forEach((button) => {
+    const active = button.dataset.mode === mode;
+    button.classList.toggle('active', active);
+  });
 
-  if (statBenar && statSalah && statKosong && statNilai) {
-    const counts = evaluateAnswers();
-    statBenar.textContent = String(counts.correct);
-    statSalah.textContent = String(counts.wrong);
-    statKosong.textContent = String(counts.empty);
-    statNilai.textContent = String(value);
+  const toggleBtn = document.getElementById('toggle-btn');
+  if (toggleBtn) {
+    toggleBtn.disabled = mode === 'exam';
+    if (mode === 'exam') {
+      toggleBtn.textContent = 'Tampilkan Jawaban';
+      state.showingAnswers = false;
+      removeAutoFilled();
+    }
   }
+}
+
+function getFirstPageKey() {
+  const activeTab = document.querySelector('.page-tab.active');
+  if (activeTab) return activeTab.dataset.tab || activeTab.dataset.page;
+  const firstTab = document.querySelector('.page-tab');
+  return firstTab ? (firstTab.dataset.tab || firstTab.dataset.page || 'tab-1') : 'tab-1';
+}
+
+function setPage(pageKey) {
+  const sections = document.querySelectorAll('.page-section');
+  sections.forEach((section) => {
+    const isActive = (section.dataset.tab || section.dataset.page) === pageKey;
+    section.classList.toggle('active', isActive);
+  });
+
+  document.querySelectorAll('.page-tab').forEach((button) => {
+    const match = (button.dataset.tab || button.dataset.page) === pageKey;
+    button.classList.toggle('active', match);
+  });
 }
 
 function evaluateAnswers() {
@@ -82,15 +66,15 @@ function evaluateAnswers() {
   let empty = 0;
 
   getAllInputs().forEach((input) => {
-    const key = answerKey[input.id];
-    const currentValue = input.value.trim();
-
-    if (!currentValue) {
+    const value = input.value.trim();
+    if (!value) {
       empty += 1;
       return;
     }
 
-    const isCorrect = (key || []).some((answer) => normalize(answer) === normalize(currentValue));
+    const accepted = (input.dataset.answer || '').split('|').map((item) => item.trim());
+    const isCorrect = accepted.some((answer) => normalize(answer) === normalize(value));
+
     if (isCorrect) {
       correct += 1;
     } else {
@@ -101,18 +85,38 @@ function evaluateAnswers() {
   return { correct, wrong, empty };
 }
 
+function updateStats() {
+  const stats = evaluateAnswers();
+  const total = stats.correct + stats.wrong + stats.empty;
+  const score = total ? Math.round((stats.correct / total) * 100) : 0;
+
+  const map = {
+    benar: document.getElementById('stat-benar'),
+    salah: document.getElementById('stat-salah'),
+    kosong: document.getElementById('stat-kosong'),
+    nilai: document.getElementById('stat-nilai')
+  };
+
+  if (map.benar) map.benar.textContent = String(stats.correct);
+  if (map.salah) map.salah.textContent = String(stats.wrong);
+  if (map.kosong) map.kosong.textContent = String(stats.empty);
+  if (map.nilai) map.nilai.textContent = String(score);
+}
+
 function saveAnswers() {
   const payload = {};
+
   getAllInputs().forEach((input) => {
     payload[input.id] = input.value;
   });
-  localStorage.setItem('anka_emergency_answers', JSON.stringify(payload));
-  updateProgress();
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  updateStats();
 }
 
 function loadAnswers() {
   try {
-    const saved = JSON.parse(localStorage.getItem('anka_emergency_answers') || '{}');
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
     Object.entries(saved).forEach(([id, value]) => {
       const input = document.getElementById(id);
       if (input) {
@@ -122,44 +126,47 @@ function loadAnswers() {
   } catch (error) {
     console.warn('Tidak ada data tersimpan.', error);
   }
-  updateProgress();
+
+  updateStats();
 }
 
-function setPage(pageId) {
-  const sections = document.querySelectorAll('.page-section');
-  sections.forEach((section) => {
-    section.classList.toggle('active', section.dataset.page === pageId);
-  });
-
-  document.querySelectorAll('.page-tab').forEach((button) => {
-    button.classList.toggle('active', button.dataset.page === pageId);
+function applyAutoFilled() {
+  getAllInputs().forEach((input) => {
+    const answer = (input.dataset.answer || '').trim();
+    if (!input.value.trim() && answer && input.dataset.autoFilled !== 'true') {
+      input.value = answer;
+      input.classList.add('auto-filled');
+      input.dataset.autoFilled = 'true';
+    }
   });
 }
 
-function toggleAnswers() {
-  const button = document.getElementById('toggle-btn');
+function removeAutoFilled() {
+  getAllInputs().forEach((input) => {
+    if (input.dataset.autoFilled === 'true') {
+      input.value = '';
+      input.classList.remove('auto-filled');
+      delete input.dataset.autoFilled;
+    }
+  });
+}
 
-  if (!showingAnswers) {
-    getAllInputs().forEach((input) => {
-      const key = answerKey[input.id];
-      if (!input.value.trim() && key && key.length) {
-        input.value = key[0];
-        input.classList.add('auto-filled');
-        input.dataset.autoFilled = 'true';
-      }
-    });
-    showingAnswers = true;
-    if (button) button.textContent = 'Sembunyikan Jawaban';
+function toggleShowAnswers() {
+  const toggleBtn = document.getElementById('toggle-btn');
+
+  if (state.mode === 'exam') {
+    if (toggleBtn) toggleBtn.disabled = true;
+    return;
+  }
+
+  if (!state.showingAnswers) {
+    applyAutoFilled();
+    state.showingAnswers = true;
+    if (toggleBtn) toggleBtn.textContent = 'Sembunyikan Jawaban';
   } else {
-    getAllInputs().forEach((input) => {
-      if (input.dataset.autoFilled === 'true') {
-        input.value = '';
-        input.classList.remove('auto-filled');
-        delete input.dataset.autoFilled;
-      }
-    });
-    showingAnswers = false;
-    if (button) button.textContent = 'Tampilkan Jawaban';
+    removeAutoFilled();
+    state.showingAnswers = false;
+    if (toggleBtn) toggleBtn.textContent = 'Tampilkan Jawaban';
   }
 
   saveAnswers();
@@ -167,7 +174,9 @@ function toggleAnswers() {
 
 function checkAnswers() {
   const statsPanel = document.getElementById('stats-panel');
-  const inputs = getAllInputs();
+  if (statsPanel) {
+    statsPanel.hidden = false;
+  }
 
   document.querySelectorAll('.correction-text').forEach((node) => node.remove());
 
@@ -175,9 +184,9 @@ function checkAnswers() {
   let wrong = 0;
   let empty = 0;
 
-  inputs.forEach((input) => {
+  getAllInputs().forEach((input) => {
     const value = input.value.trim();
-    const key = answerKey[input.id] || [];
+    const answerList = (input.dataset.answer || '').split('|').map((item) => item.trim());
 
     input.classList.remove('correct', 'incorrect');
 
@@ -186,7 +195,8 @@ function checkAnswers() {
       return;
     }
 
-    if (key.some((answer) => normalize(answer) === normalize(value))) {
+    const isCorrect = answerList.some((answer) => normalize(answer) === normalize(value));
+    if (isCorrect) {
       input.classList.add('correct');
       correct += 1;
     } else {
@@ -195,19 +205,25 @@ function checkAnswers() {
 
       const note = document.createElement('span');
       note.className = 'correction-text';
-      note.textContent = `(${key[0] || 'Jawaban referensi'})`;
+      note.textContent = `(${answerList[0] || 'Jawaban referensi'})`;
       input.parentNode.appendChild(note);
     }
   });
 
-  document.getElementById('stat-benar').textContent = String(correct);
-  document.getElementById('stat-salah').textContent = String(wrong);
-  document.getElementById('stat-kosong').textContent = String(empty);
-  document.getElementById('stat-nilai').textContent = String(
-    inputs.length ? Math.round((correct / inputs.length) * 100) : 0
-  );
+  const total = correct + wrong + empty;
+  const score = total ? Math.round((correct / total) * 100) : 0;
 
-  if (statsPanel) statsPanel.hidden = false;
+  const map = {
+    benar: document.getElementById('stat-benar'),
+    salah: document.getElementById('stat-salah'),
+    kosong: document.getElementById('stat-kosong'),
+    nilai: document.getElementById('stat-nilai')
+  };
+
+  if (map.benar) map.benar.textContent = String(correct);
+  if (map.salah) map.salah.textContent = String(wrong);
+  if (map.kosong) map.kosong.textContent = String(empty);
+  if (map.nilai) map.nilai.textContent = String(score);
 }
 
 function resetForm() {
@@ -221,36 +237,59 @@ function resetForm() {
   });
 
   document.querySelectorAll('.correction-text').forEach((node) => node.remove());
-  showingAnswers = false;
-  document.getElementById('toggle-btn').textContent = 'Tampilkan Jawaban';
-  document.getElementById('stats-panel').hidden = true;
-  localStorage.removeItem('anka_emergency_answers');
+  state.showingAnswers = false;
+
+  const toggleBtn = document.getElementById('toggle-btn');
+  if (toggleBtn) toggleBtn.textContent = 'Tampilkan Jawaban';
+
+  const statsPanel = document.getElementById('stats-panel');
+  if (statsPanel) statsPanel.hidden = true;
+
+  localStorage.removeItem(STORAGE_KEY);
+  updateStats();
 }
 
 function bindEvents() {
   document.querySelectorAll('.page-tab').forEach((button) => {
-    button.addEventListener('click', () => setPage(button.dataset.page));
+    button.addEventListener('click', () => {
+      const pageKey = button.dataset.tab || button.dataset.page;
+      setPage(pageKey);
+    });
   });
 
-  document.getElementById('check-btn').addEventListener('click', checkAnswers);
-  document.getElementById('toggle-btn').addEventListener('click', toggleAnswers);
-  document.getElementById('reset-btn').addEventListener('click', resetForm);
-  document.getElementById('print-btn').addEventListener('click', () => window.print());
+  document.querySelectorAll('.mode-btn').forEach((button) => {
+    button.addEventListener('click', () => {
+      setMode(button.dataset.mode);
+    });
+  });
+
+  const checkBtn = document.getElementById('check-btn');
+  if (checkBtn) {
+    checkBtn.addEventListener('click', checkAnswers);
+  }
+
+  const toggleBtn = document.getElementById('toggle-btn');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', toggleShowAnswers);
+  }
+
+  const resetBtn = document.getElementById('reset-btn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', resetForm);
+  }
+
+  const printBtn = document.getElementById('print-btn');
+  if (printBtn) {
+    printBtn.addEventListener('click', () => window.print());
+  }
 
   getAllInputs().forEach((input) => {
     input.addEventListener('input', () => {
       if (input.dataset.autoFilled === 'true') {
         input.dataset.autoFilled = 'false';
+        input.classList.remove('auto-filled');
       }
       saveAnswers();
-      if (showingAnswers) {
-        const key = answerKey[input.id] || [];
-        if (input.value.trim() === '' && key.length) {
-          input.value = key[0];
-          input.classList.add('auto-filled');
-          input.dataset.autoFilled = 'true';
-        }
-      }
     });
   });
 }
@@ -258,5 +297,7 @@ function bindEvents() {
 document.addEventListener('DOMContentLoaded', () => {
   loadAnswers();
   bindEvents();
-  setPage('page-1');
+  setMode(document.body.dataset.mode || 'training');
+  setPage(getFirstPageKey());
+  updateStats();
 });
