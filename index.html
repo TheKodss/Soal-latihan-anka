@@ -3,40 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ANKA MALE UAV - Training App</title>
+    <title>ANKA - Bold Face Limitations Training</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body data-mode="training">
+  <body>
     <div class="app-shell">
-      <aside class="sidebar no-print" aria-label="Sidebar navigasi">
+      <aside class="sidebar no-print">
         <div class="logo-block">
           <div class="logo-mark">A</div>
           <div>
             <h2>ANKA Training</h2>
-            <p class="subtitle">MALE UAV</p>
+            <p class="subtitle">Bold Face Limitations</p>
           </div>
         </div>
 
-        <div class="panel-title">Modul</div>
-        <nav class="page-tabs" role="tablist" aria-label="Navigasi modul soal">
-          <button class="page-tab active" type="button" data-tab="tab-1" aria-label="Tab Bold Face Limitations">1. BOLD FACE LIMITATIONS</button>
-          <button class="page-tab" type="button" data-tab="tab-2" aria-label="Tab Emer - Act Position Fail">2. EMER - ACT POSITION FAIL</button>
-          <button class="page-tab" type="button" data-tab="tab-3" aria-label="Tab Emer - Eng Rpm High">3. EMER - ENG RPM HIGH</button>
-          <button class="page-tab" type="button" data-tab="tab-4" aria-label="Tab Emer - Eng Rpm Low">4. EMER - ENG RPM LOW</button>
-          <button class="page-tab" type="button" data-tab="tab-5" aria-label="Tab Emer - Ldg Gr Extention Fail">5. EMER - LDG GR EXTENTION FAIL</button>
-          <button class="page-tab" type="button" data-tab="tab-6" aria-label="Tab Emer - Eng Stopped">6. EMER - ENG STOPPED</button>
-        </nav>
-
-        <div class="actions">
-          <button class="mode-btn btn secondary" type="button" data-mode="training">Mode Latihan</button>
-          <button class="mode-btn btn primary" type="button" data-mode="exam">Mode Ujian</button>
-          <button id="check-btn" class="btn outline" type="button">Koreksi Jawaban</button>
-          <button id="toggle-btn" class="btn secondary" type="button">Tampilkan Jawaban</button>
-          <button id="reset-btn" class="btn danger" type="button">Ulangi Latihan</button>
+        <div class="panel-title">Navigasi Halaman</div>
+        <div class="page-tabs" role="tablist" aria-label="Navigasi halaman soal">
+          <button class="page-tab active" type="button" data-page="page-1" aria-label="Buka Page 1">Page 1</button>
+          <button class="page-tab" type="button" data-page="page-2" aria-label="Buka Page 2">Page 2</button>
+          <button class="page-tab" type="button" data-page="page-3" aria-label="Buka Page 3">Page 3</button>
+          <button class="page-tab" type="button" data-page="page-4" aria-label="Buka Page 4">Page 4</button>
+          <button class="page-tab" type="button" data-page="page-5" aria-label="Buka Page 5">Page 5</button>
+          <button class="page-tab" type="button" data-page="page-6" aria-label="Buka Page 6">Page 6</button>
         </div>
 
-        <div class="stats-panel" id="stats-panel">
-          <h3>Statistik</h3>
+        <div class="actions">
+          <button id="check-btn" type="button" class="btn primary">Koreksi Jawaban</button>
+          <button id="toggle-btn" type="button" class="btn secondary">Tampilkan Jawaban</button>
+          <button id="reset-btn" type="button" class="btn danger">Ulangi Latihan</button>
+          <button id="print-btn" type="button" class="btn outline">Cetak / Simpan PDF</button>
+        </div>
+
+        <div id="stats-panel" class="stats-panel" hidden>
+          <h3>Hasil Evaluasi</h3>
           <p>Benar: <span id="stat-benar">0</span></p>
           <p>Salah: <span id="stat-salah">0</span></p>
           <p>Kosong: <span id="stat-kosong">0</span></p>
@@ -45,291 +44,72 @@
       </aside>
 
       <main class="content-panel">
-        <article class="document-page" id="document-page" aria-live="polite">
-
-          <section class="page-section active" data-tab="tab-1">
+        <div class="document-page" id="paper">
+          <section class="page-section active" data-page="page-1">
             <div class="page-header">
               <span class="header-tag">TRAINING ONLY</span>
-              <span class="header-muted">ANKA / LIMITS</span>
+              <span class="header-muted">ANKA / EMERGENCY PROCEDURES</span>
             </div>
 
-            <div class="block-title red">BOLD FACE LIMITATIONS</div>
-
-            <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">VNE (Never Exceed)</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab1-q1" data-answer="108 KIAS" maxlength="50" />
-            </div>
-            <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">VCFOP (Max Cowling open Flap open / close and half opened flight)</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab1-q2" data-answer="90 KIAS" maxlength="50" />
-            </div>
-            <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">VLO (Max LDGGEAR normal extension)</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab1-q3" data-answer="90 KIAS" maxlength="50" />
-            </div>
-            <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">VLO (Max LDGGEAR emergency extension)</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab1-q4" data-answer="83 KIAS" maxlength="50" />
-            </div>
-            <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">VLE (Max LDGGEAR extended flight)</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab1-q5" data-answer="90 KIAS" maxlength="50" />
-            </div>
-
-            <div class="section-label">Anka wind limitation</div>
-            <table class="info-table pale-yellow">
-              <thead>
-                <tr>
-                  <th>WIND</th>
-                  <th>AUTOTAKEOFF</th>
-                  <th>AUTOLAND</th>
-                  <th>GUST</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>HEAD</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-w1" data-answer="<= 20 KTS" maxlength="30" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-w2" data-answer="<= 20 KTS" maxlength="30" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-w3" data-answer="+/- 7 KTS" maxlength="30" /></td>
-                </tr>
-                <tr>
-                  <td>CROSS</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-w4" data-answer="<= 15 KTS" maxlength="30" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-w5" data-answer="<= 15 KTS" maxlength="30" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-w6" data-answer="+/- 7 KTS" maxlength="30" /></td>
-                </tr>
-                <tr>
-                  <td>TAIL</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-w7" data-answer="<= 6 KTS" maxlength="30" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-w8" data-answer="<= 6 KTS" maxlength="30" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-w9" data-answer="+/- 4 KTS" maxlength="30" /></td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="title-block red">ACT POSITION FAIL</div>
+            <div class="title-block yellow">ACT AUTOFLOAT ACTIVE</div>
 
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">Turning Speed</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab1-q6" data-answer="5 kts or less" maxlength="50" />
+              <div class="qa-label-wrap">
+                <span class="qa-label">1. Flight Mode</span>
+                <span class="qa-dots" aria-hidden="true"></span>
+              </div>
+              <input id="p1-1" class="answer-input" type="text" maxlength="40" data-answer="HOLD - ROLL" />
             </div>
-            <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">MTOW (Max Takeoff Weight)</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab1-q7" data-answer="1700 Kg" maxlength="50" />
-            </div>
-            <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">Climbing Gradient</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab1-q8" data-answer="2,5% or more" maxlength="50" />
-            </div>
-            <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">Flight Level Wind</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab1-q9" data-answer="60 kts or less" maxlength="50" />
-            </div>
-
-            <div class="section-label">Ku Band Distances</div>
-            <table class="info-table">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th colspan="3">UAV</th>
-                  <th colspan="3">Omni Antenna</th>
-                </tr>
-                <tr>
-                  <th>Ground / Antenna</th>
-                  <th>10,71</th>
-                  <th>21,73</th>
-                  <th>44,73</th>
-                  <th>10,71</th>
-                  <th>21,73</th>
-                  <th>44,73</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Ground</td>
-                  <td>10,71 Mbps</td>
-                  <td>21,73 Mbps</td>
-                  <td>44,73 Mbps</td>
-                  <td>10,71 Mbps</td>
-                  <td>21,73 Mbps</td>
-                  <td>44,73 Mbps</td>
-                </tr>
-                <tr>
-                  <td>Directional Antenna Narrow Band</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k1" data-answer="200 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k2" data-answer="200 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k3" data-answer="200 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k4" data-answer="90 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k5" data-answer="65 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k6" data-answer="45 Km" maxlength="25" /></td>
-                </tr>
-                <tr>
-                  <td>Directional Antenna Wide Band</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k7" data-answer="40 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k8" data-answer="30 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k9" data-answer="20 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k10" data-answer="7,5 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k11" data-answer="5 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k12" data-answer="3,5 Km" maxlength="25" /></td>
-                </tr>
-                <tr>
-                  <td>Omni Antenna</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k13" data-answer="7 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k14" data-answer="5 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k15" data-answer="3,5 Km" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k16" data-answer="N/A" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k17" data-answer="N/A" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-k18" data-answer="N/A" maxlength="25" /></td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="section-label">System limitation of ANKA</div>
-            <table class="info-table">
-              <thead>
-                <tr>
-                  <th>SYSTEM</th>
-                  <th>MIN</th>
-                  <th>NORMAL OPERATION</th>
-                  <th>MAX</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>ENGINE RPM</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s1" data-answer="900" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s2" data-answer="980-2320" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s3" data-answer="2357" maxlength="25" /></td>
-                </tr>
-                <tr>
-                  <td>OIL PRESSURE IN AIR (PSI)</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s4" data-answer="17" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s5" data-answer="51-87" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s6" data-answer="94" maxlength="25" /></td>
-                </tr>
-                <tr>
-                  <td>OIL TEMPERATURE (°C)</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s7" data-answer="50" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s8" data-answer="75-110" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s9" data-answer="140" maxlength="25" /></td>
-                </tr>
-                <tr>
-                  <td>GEAR BOX TEMPERATURE (°C)</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s10" data-answer="-30" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s11" data-answer="70-100" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s12" data-answer="120" maxlength="25" /></td>
-                </tr>
-                <tr>
-                  <td>COOLANT TEMPERATURE (°C)</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s13" data-answer="-32" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s14" data-answer="80-100" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s15" data-answer="105" maxlength="25" /></td>
-                </tr>
-                <tr>
-                  <td>RAIL PRESSURE (BAR)</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s16" data-answer="330" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s17" data-answer="360-1350" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s18" data-answer="1425" maxlength="25" /></td>
-                </tr>
-                <tr>
-                  <td>FUEL PRESSURE (PSI)</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s19" data-answer="4" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s20" data-answer="5-35" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s21" data-answer="44" maxlength="25" /></td>
-                </tr>
-                <tr>
-                  <td>ALTERNATOR VOLTAGE (V)</td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s22" data-answer="22" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s23" data-answer="27-28" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s24" data-answer="29" maxlength="25" /></td>
-                </tr>
-                <tr>
-                  <td>ALTERNATOR CURRENT (AMP)</td>
-                  <td></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s25" data-answer="0-140" maxlength="25" /></td>
-                  <td><input class="answer-input table-input" type="text" id="tab1-s26" data-answer="141" maxlength="25" /></td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="inline-qa">
-              <span>Max allowable wind speed at UAV is</span>
-              <input class="answer-input inline-input" type="text" id="tab1-inline-1" data-answer="60" maxlength="10" />
-              <span>kts, but the pilot may exceedthis limit up to</span>
-              <input class="answer-input inline-input" type="text" id="tab1-inline-2" data-answer="80" maxlength="10" />
-              <span>kts according to fuel, range and ground speed considerations</span>
-            </div>
-
-            <div class="inline-qa">
-              <span>For rain condition, add</span>
-              <input class="answer-input inline-input" type="text" id="tab1-inline-3" data-answer="+1" maxlength="10" />
-              <span>kts to Stall speeds</span>
-            </div>
-
-            <div class="section-label">TAKEOFF entry conditions</div>
-            <div class="list-block">
-              <p>Airspeed below <input class="answer-input inline-input" type="text" id="tab1-list-1" data-answer="20" maxlength="8" /> kts</p>
-              <p>Heading within <input class="answer-input inline-input" type="text" id="tab1-list-2" data-answer="10°" maxlength="8" /> of runway</p>
-              <p>Lateral deviation +/- <input class="answer-input inline-input" type="text" id="tab1-list-3" data-answer="3" maxlength="8" /> meters from centerline</p>
-              <p>Start point deviation +/- <input class="answer-input inline-input" type="text" id="tab1-list-4" data-answer="5" maxlength="8" /> meters</p>
-            </div>
-
-            <div class="section-label">Landing limitations</div>
-            <div class="list-block">
-              <p>Max CRAB angle at touchdown &lt; <input class="answer-input inline-input" type="text" id="tab1-list-5" data-answer="4°" maxlength="10" /></p>
-              <p>Pitch angle at touchdown between <input class="answer-input inline-input" type="text" id="tab1-list-6" data-answer="-1°" maxlength="10" /> and <input class="answer-input inline-input" type="text" id="tab1-list-7" data-answer="7°" maxlength="10" /></p>
-              <p>Max roll angle at touchdown &lt; <input class="answer-input inline-input" type="text" id="tab1-list-8" data-answer="8°" maxlength="10" /></p>
-              <p>Max deviation from centerline +/- <input class="answer-input inline-input" type="text" id="tab1-list-9" data-answer="7,5 meters" maxlength="20" /></p>
-            </div>
-
-            <div class="inline-qa">
-              <span>Do Not Enter or fly in</span>
-              <input class="answer-input inline-input" type="text" id="tab1-inline-4" data-answer="10 km" maxlength="20" />
-              <span>CB Vicinity</span>
-            </div>
-          </section>
-
-          <section class="page-section" data-tab="tab-2">
-            <div class="page-header">
-              <span class="header-tag">TRAINING ONLY</span>
-              <span class="header-muted">ANKAID-T0544-AFM-2</span>
-            </div>
-
-            <div class="block-title red">ACT POSITION FAIL</div>
-            <div class="block-title yellow">ACT AUTOFLOAT ACTIVE</div>
 
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">1. Flight Mode</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab2-q1" data-answer="HOLD - ROLL" maxlength="40" />
+              <div class="qa-label-wrap">
+                <span class="qa-label">2. Airspeed</span>
+                <span class="qa-dots" aria-hidden="true"></span>
+              </div>
+              <input id="p1-2" class="answer-input" type="text" maxlength="40" data-answer="1.2 Vs" />
             </div>
+
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">2. Airspeed</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab2-q2" data-answer="1.2 Vs" maxlength="40" />
+              <div class="qa-label-wrap">
+                <span class="qa-label">3. Actuators (affected)</span>
+                <span class="qa-dots" aria-hidden="true"></span>
+              </div>
+              <input id="p1-3" class="answer-input" type="text" maxlength="40" data-answer="FLOAT" />
             </div>
+
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">3. Actuators (affected)</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab2-q3" data-answer="FLOAT" maxlength="40" />
-            </div>
-            <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">4. Actuators (affected)</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab2-q4" data-answer="RESET" maxlength="40" />
+              <div class="qa-label-wrap">
+                <span class="qa-label">4. Actuators (affected)</span>
+                <span class="qa-dots" aria-hidden="true"></span>
+              </div>
+              <input id="p1-4" class="answer-input" type="text" maxlength="40" data-answer="RESET" />
             </div>
 
             <p class="inline-callout">If failure message disappears:</p>
             <p class="instruction-line">5A. Continue Normal Operation</p>
 
             <p class="inline-callout margin-top-small">If failure message remains:</p>
+
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">5A. Actuator (affected)</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab2-q5" data-answer="FLOAT" maxlength="40" />
+              <div class="qa-label-wrap">
+                <span class="qa-label">5A. Actuator (affected)</span>
+                <span class="qa-dots" aria-hidden="true"></span>
+              </div>
+              <input id="p1-5" class="answer-input" type="text" maxlength="40" data-answer="FLOAT" />
             </div>
+
             <div class="qa-row note-row">
-              <div class="qa-label-wrap"><span class="qa-label">5B.</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab2-q6" data-answer="LAND AS SOON AS PRACTICABLE" maxlength="60" />
+              <div class="qa-label-wrap">
+                <span class="qa-label">5B.</span>
+                <span class="qa-dots" aria-hidden="true"></span>
+              </div>
+              <input id="p1-6" class="answer-input" type="text" maxlength="40" data-answer="LAND AS SOON AS PRACTICABLE" />
             </div>
 
-            <div class="warning-box note"><strong>NOTE:</strong> Consider the following parameters if the crosswind is over 5 knots. Roll command should be given gradually.</div>
+            <div class="note-box">Consider the following parameters if the crosswind is over 5 knots. Roll command should be given gradually.</div>
 
-            <table class="info-table">
+            <table class="landing-table">
               <thead>
                 <tr>
                   <th>Surface</th>
@@ -337,33 +117,37 @@
                 </tr>
               </thead>
               <tbody>
-                <tr><td>RIRV</td><td><input class="answer-input table-input" type="text" id="tab2-t1" data-answer="Left" maxlength="15" /></td></tr>
-                <tr><td>RORV</td><td><input class="answer-input table-input" type="text" id="tab2-t2" data-answer="Left" maxlength="15" /></td></tr>
-                <tr><td>LIRV</td><td><input class="answer-input table-input" type="text" id="tab2-t3" data-answer="Right" maxlength="15" /></td></tr>
-                <tr><td>LORV</td><td><input class="answer-input table-input" type="text" id="tab2-t4" data-answer="Right" maxlength="15" /></td></tr>
-                <tr><td>RIA</td><td><input class="answer-input table-input" type="text" id="tab2-t5" data-answer="Right" maxlength="15" /></td></tr>
-                <tr><td>ROA</td><td><input class="answer-input table-input" type="text" id="tab2-t6" data-answer="Right" maxlength="15" /></td></tr>
-                <tr><td>LIA</td><td><input class="answer-input table-input" type="text" id="tab2-t7" data-answer="Left" maxlength="15" /></td></tr>
-                <tr><td>LOA</td><td><input class="answer-input table-input" type="text" id="tab2-t8" data-answer="Left" maxlength="15" /></td></tr>
+                <tr><td>RIRV</td><td><input id="p1-7" class="answer-input" type="text" maxlength="20" data-answer="Left" /></td></tr>
+                <tr><td>RORV</td><td><input id="p1-8" class="answer-input" type="text" maxlength="20" data-answer="Left" /></td></tr>
+                <tr><td>LIRV</td><td><input id="p1-9" class="answer-input" type="text" maxlength="20" data-answer="Right" /></td></tr>
+                <tr><td>LORV</td><td><input id="p1-10" class="answer-input" type="text" maxlength="20" data-answer="Right" /></td></tr>
+                <tr><td>RIA</td><td><input id="p1-11" class="answer-input" type="text" maxlength="20" data-answer="Right" /></td></tr>
+                <tr><td>ROA</td><td><input id="p1-12" class="answer-input" type="text" maxlength="20" data-answer="Right" /></td></tr>
+                <tr><td>LIA</td><td><input id="p1-13" class="answer-input" type="text" maxlength="20" data-answer="Left" /></td></tr>
+                <tr><td>LOA</td><td><input id="p1-14" class="answer-input" type="text" maxlength="20" data-answer="Left" /></td></tr>
               </tbody>
             </table>
 
-            <div class="warning-box caution"><strong>CAUTION:</strong> Avoid landing if crosswind exceeds 10 knots during asymmetric load condition with ruddervator failure. Consider jettison, different wind conditions or diverting to alternate airbase.</div>
+            <div class="caution-box">Avoid landing if crosswind exceeds 10 knots during asymmetric load condition with ruddervator failure. Consider jettison, different wind conditions or diverting to alternate airbase.</div>
 
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">5C. AUTOLAND</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab2-q7" data-answer="Verify DEGRADED" maxlength="40" />
+              <div class="qa-label-wrap">
+                <span class="qa-label">5C. AUTOLAND</span>
+                <span class="qa-dots" aria-hidden="true"></span>
+              </div>
+              <input id="p1-15" class="answer-input" type="text" maxlength="40" data-answer="Verify DEGRADED" />
             </div>
+
             <div class="end-flag">END</div>
           </section>
 
-          <section class="page-section" data-tab="tab-3">
+          <section class="page-section" data-page="page-2">
             <div class="page-header">
               <span class="header-tag">TRAINING ONLY</span>
-              <span class="header-muted">ANKAID-T0544-AFM-2</span>
+              <span class="header-muted">PWR / ENGINE</span>
             </div>
 
-            <div class="block-title outline-red">ENG RPM HIGH</div>
+            <div class="title-block outline-red">ENG RPM HIGH</div>
 
             <div class="objectives-box">
               <ol>
@@ -375,56 +159,56 @@
               </ol>
             </div>
 
-            <div class="warning-box note"><strong>NOTE:</strong> Avoid sudden throttle changes.</div>
+            <div class="note-box">Avoid sudden throttle changes.</div>
 
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">1. Flight Mode</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab3-q1" data-answer="HOLD - THR" maxlength="40" />
+              <input id="p2-1" class="answer-input" type="text" maxlength="40" data-answer="HOLD - THR" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">2. ENG THR</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab3-q2" data-answer="Decrease" maxlength="40" />
+              <input id="p2-2" class="answer-input" type="text" maxlength="40" data-answer="Decrease" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">3. Airspeed</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab3-q3" data-answer="Adjust" maxlength="40" />
+              <input id="p2-3" class="answer-input" type="text" maxlength="40" data-answer="Adjust" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">4. ENG THR</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab3-q4" data-answer="As Required" maxlength="40" />
+              <input id="p2-4" class="answer-input" type="text" maxlength="40" data-answer="As Required" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">5. ENG RPM</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab3-q5" data-answer="Check" maxlength="40" />
+              <input id="p2-5" class="answer-input" type="text" maxlength="40" data-answer="Check" />
             </div>
 
             <p class="inline-callout">If RPM is below 2,320:</p>
             <div class="qa-row note-row">
               <div class="qa-label-wrap"><span class="qa-label">5A.</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab3-q6" data-answer="LAND AS SOON AS PRACTICABLE" maxlength="60" />
+              <input id="p2-6" class="answer-input" type="text" maxlength="40" data-answer="LAND AS SOON AS PRACTICABLE" />
             </div>
 
             <p class="inline-callout">If RPM is above 2,320:</p>
             <div class="qa-row note-row">
               <div class="qa-label-wrap"><span class="qa-label">5A.</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab3-q7" data-answer="LAND AS SOON AS POSSIBLE" maxlength="60" />
+              <input id="p2-7" class="answer-input" type="text" maxlength="40" data-answer="LAND AS SOON AS POSSIBLE" />
             </div>
 
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">6. AUTOLAND</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab3-q8" data-answer="Consider DEGRADED" maxlength="60" />
+              <input id="p2-8" class="answer-input" type="text" maxlength="40" data-answer="Consider DEGRADED" />
             </div>
 
             <div class="end-flag">END</div>
           </section>
 
-          <section class="page-section" data-tab="tab-4">
+          <section class="page-section" data-page="page-3">
             <div class="page-header">
               <span class="header-tag">TRAINING ONLY</span>
               <span class="header-muted">PWR / ENGINE</span>
             </div>
 
-            <div class="block-title red">ENG RPM LOW</div>
+            <div class="title-block red">ENG RPM LOW</div>
 
             <div class="objectives-box">
               <ol>
@@ -437,119 +221,246 @@
 
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">1. Flight Mode</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab4-q1" data-answer="HOLD - THR" maxlength="40" />
+              <input id="p3-1" class="answer-input" type="text" maxlength="40" data-answer="HOLD - THR" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">2. ENG THR</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab4-q2" data-answer="As Required" maxlength="40" />
+              <input id="p3-2" class="answer-input" type="text" maxlength="40" data-answer="As Required" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">3. Fuel Pump</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab4-q3" data-answer="On" maxlength="40" />
+              <input id="p3-3" class="answer-input" type="text" maxlength="40" data-answer="On" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">4. Non - Essential Electrical Loads</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab4-q4" data-answer="Consider OFF" maxlength="60" />
+              <input id="p3-4" class="answer-input" type="text" maxlength="40" data-answer="Consider OFF" />
             </div>
             <div class="qa-row note-row">
               <div class="qa-label-wrap"><span class="qa-label">5.</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab4-q5" data-answer="LAND AS SOON AS POSSIBLE" maxlength="60" />
+              <input id="p3-5" class="answer-input" type="text" maxlength="40" data-answer="LAND AS SOON AS POSSIBLE" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">6. AUTOLAND</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab4-q6" data-answer="DEGRADED" maxlength="40" />
+              <input id="p3-6" class="answer-input" type="text" maxlength="40" data-answer="DEGRADED" />
             </div>
+
             <div class="end-flag">END</div>
           </section>
 
-          <section class="page-section" data-tab="tab-5">
+          <section class="page-section" data-page="page-4">
             <div class="page-header">
               <span class="header-tag">TRAINING ONLY</span>
               <span class="header-muted">LANDING GEAR</span>
             </div>
 
-            <div class="block-title red">NOSE LDG GR EXTENTION FAIL / LEFT LDG GR EXTENTION FAIL / RIGHT LDG GR EXTENTION FAIL</div>
-            <div class="warning-box note"><strong>NOTE:</strong> Determine the landing gear position by using EO/IR camera.</div>
+            <div class="title-block red">NOSE LDG GR EXTENTION FAIL / LEFT LDG GR EXTENTION FAIL / RIGHT LDG GR EXTENTION FAIL</div>
+            <div class="caution-box">Determine the landing gear position by using EO/IR camera.</div>
 
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">1. (Icon Warning) NOSE, LEFT, RIGHT or ALL LDG GRs</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab5-q1" data-answer="FORCE EXT" maxlength="40" />
+              <input id="p4-1" class="answer-input" type="text" maxlength="40" data-answer="FORCE EXT" />
             </div>
 
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">If LDG GRs are NOT extended:</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab5-q2" data-answer="" maxlength="40" style="display:none;" />
+              <input id="p4-2" class="answer-input" type="text" maxlength="40" data-answer="" style="display:none;" />
             </div>
 
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">2. Fuel Quantity</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab5-q3" data-answer="Decrease" maxlength="40" />
+              <input id="p4-3" class="answer-input" type="text" maxlength="40" data-answer="Decrease" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">3. EO/IR Camera</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab5-q4" data-answer="STOW" maxlength="40" />
+              <input id="p4-4" class="answer-input" type="text" maxlength="40" data-answer="STOW" />
             </div>
 
-            <div class="warning-box note"><strong>NOTE:</strong> Adjust proper TDP for retracted landing gear(s).</div>
+            <div class="caution-box">Adjust proper TDP for retracted landing gear(s).</div>
 
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">4. AUTOLAND</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab5-q5" data-answer="Consider POS 1 or POS 2" maxlength="60" />
+              <input id="p4-5" class="answer-input" type="text" maxlength="40" data-answer="Consider POS 1 or POS 2" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">5. ENGINE</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab5-q6" data-answer="CUT, at Touchdown" maxlength="60" />
+              <input id="p4-6" class="answer-input" type="text" maxlength="40" data-answer="CUT, at Touchdown" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">6. Flight Mode</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab5-q7" data-answer="Consider BACKUP at Touchdown" maxlength="60" />
+              <input id="p4-7" class="answer-input" type="text" maxlength="40" data-answer="Consider BACKUP at Touchdown" />
             </div>
             <div class="qa-row">
               <div class="qa-label-wrap"><span class="qa-label">7. Brakes</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab5-q8" data-answer="As Required" maxlength="40" />
+              <input id="p4-8" class="answer-input" type="text" maxlength="40" data-answer="As Required" />
             </div>
+
             <div class="end-flag">END</div>
           </section>
 
-          <section class="page-section" data-tab="tab-6">
+          <section class="page-section" data-page="page-5">
             <div class="page-header">
               <span class="header-tag">TRAINING ONLY</span>
-              <span class="header-muted">PWR / ENGINE</span>
+              <span class="header-muted">ANKAID-T0544-AFM-2</span>
             </div>
 
-            <div class="block-title red">ENG STOPPED</div>
+            <div class="title-block red">ENG STOPPED</div>
+            <div class="title-block yellow">ENG THRUST LOST</div>
 
-            <div class="warning-box note"><strong>NOTE:</strong> Engine stop is a critical condition. Maintain aircraft control, complete stabilisation, and prioritize landing area selection.</div>
+            <div class="objectives-box">
+              <ol>
+                <li>Both alternators may fail. In such condition batteries provide electrical power for about 30 minutes.</li>
+                <li>Systems powered by main and mission buses may automatically shut down.</li>
+                <li>GO AROUND is NOT an option during landing.</li>
+              </ol>
+            </div>
+
+            <div class="note-box">Land as soon as practicable even if the failure message disappears.</div>
 
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">1. Flight Mode</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab6-q1" data-answer="HOLD - ROLL" maxlength="40" />
+              <div class="qa-label-wrap"><span class="qa-label">1. THR Response</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q1" class="answer-input" type="text" maxlength="40" data-answer="Check" />
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label"><u>If it is NOT possible to reach the Main Base or Emergency Base:</u></span><span class="qa-dots" aria-hidden="true"></span></div>
+              <span class="empty-inline"></span>
             </div>
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">2. Airspeed</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab6-q2" data-answer="1.2 Vs" maxlength="40" />
+              <div class="qa-label-wrap"><span class="qa-label">2A. Emergency Landing Area</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q2" class="answer-input" type="text" maxlength="40" data-answer="Update" />
             </div>
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">3. Propeller</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab6-q3" data-answer="Feather" maxlength="40" />
+              <div class="qa-label-wrap"><span class="qa-label">2B. Flight Mode</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q3" class="answer-input" type="text" maxlength="40" data-answer="EMER" />
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label"><u>If it is possible to reach the Main Base or Emergency Base:</u></span><span class="qa-dots" aria-hidden="true"></span></div>
+              <span class="empty-inline"></span>
             </div>
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">4. Engine Restart Attempt</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab6-q4" data-answer="As Required" maxlength="40" />
+              <div class="qa-label-wrap"><span class="qa-label">2A. Airspeed</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q4" class="answer-input" type="text" maxlength="40" data-answer="GLIDE SPEED" />
+            </div>
+
+            <div class="caution-box">Before turning off WBS, ADT, and FLIR, consider data link status and quality. Switch them off within 2 minutes if both alternators fail to provide power, if needed.</div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">3. WBS, ADT, and FLIR</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q5" class="answer-input" type="text" maxlength="60" data-answer="Consider OFF within 2 minutes" />
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label"><u>If time and altitude permit for engine restart, perform the actions below:</u></span><span class="qa-dots" aria-hidden="true"></span></div>
+              <span class="empty-inline"></span>
             </div>
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">5. Landing Decision</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab6-q5" data-answer="LAND AS SOON AS PRACTICABLE" maxlength="60" />
+              <div class="qa-label-wrap"><span class="qa-label">4. Altitude</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q6" class="answer-input" type="text" maxlength="40" data-answer="Below 13,000 ft MSL" />
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label"><u>If engine does NOT start automatically:</u></span><span class="qa-dots" aria-hidden="true"></span></div>
+              <span class="empty-inline"></span>
             </div>
             <div class="qa-row">
-              <div class="qa-label-wrap"><span class="qa-label">6. AUTOLAND</span><span class="qa-dots" aria-hidden="true"></span></div>
-              <input class="answer-input" type="text" id="tab6-q6" data-answer="DEGRADED" maxlength="40" />
+              <div class="qa-label-wrap"><span class="qa-label">5. FUEL PUMP</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q7" class="answer-input" type="text" maxlength="40" data-answer="Verify ON" />
             </div>
-            <div class="warning-box caution"><strong>CAUTION:</strong> Do not attempt go-around after engine stop unless aircraft is clearly controllable and the emergency landing site is not available.</div>
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">6. THR</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q8" class="answer-input" type="text" maxlength="40" data-answer="IDLE" />
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label"><u>If RPM is above 600, repeat ENG STOP and START procedures:</u></span><span class="qa-dots" aria-hidden="true"></span></div>
+              <span class="empty-inline"></span>
+            </div>
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">7. ENG</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q9" class="answer-input" type="text" maxlength="40" data-answer="STOP" />
+            </div>
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">8. ENG</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q10" class="answer-input" type="text" maxlength="40" data-answer="START" />
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label"><u>If propeller does NOT start and RPM is below 600:</u></span><span class="qa-dots" aria-hidden="true"></span></div>
+              <span class="empty-inline"></span>
+            </div>
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">9. BUS</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q11" class="answer-input" type="text" maxlength="40" data-answer="TIE" />
+            </div>
+
+            <div class="caution-box">Do NOT engage starter more than 3 attempts if both alternators are unable to provide power.</div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">10. STARTER</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q12" class="answer-input" type="text" maxlength="40" data-answer="ON" />
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label"><u>If engine starts:</u></span><span class="qa-dots" aria-hidden="true"></span></div>
+              <span class="empty-inline"></span>
+            </div>
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">11A. BUS</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q13" class="answer-input" type="text" maxlength="40" data-answer="Verify UNTIE" />
+            </div>
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">11B. Failure Messages</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q14" class="answer-input" type="text" maxlength="40" data-answer="Check" />
+            </div>
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">11C. Engine RPM and Throttle</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q15" class="answer-input" type="text" maxlength="40" data-answer="Check" />
+            </div>
+            <div class="qa-row note-row">
+              <div class="qa-label-wrap"><span class="qa-label">11D.</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q16" class="answer-input" type="text" maxlength="60" data-answer="LAND AS SOON AS PRACTICABLE" />
+            </div>
+
+            <div class="caution-box">Pilot is responsible for choosing a suitable emergency landing area.</div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label"><u>If engine does NOT start and it is possible to reach the Main base or Emergency base:</u></span><span class="qa-dots" aria-hidden="true"></span></div>
+              <span class="empty-inline"></span>
+            </div>
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">11A. RTB and Emergency Landing Area</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q17" class="answer-input" type="text" maxlength="60" data-answer="Update" />
+            </div>
+
+            <div class="caution-box">Enter Recovery Initiation Window above the glideslope.</div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">11B. AUTOLAND</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q18" class="answer-input" type="text" maxlength="60" data-answer="Verify DEGRADED" />
+            </div>
+            <div class="qa-row note-row">
+              <div class="qa-label-wrap"><span class="qa-label">11C.</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q19" class="answer-input" type="text" maxlength="60" data-answer="LAND AS SOON AS POSSIBLE" />
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label"><u>If engine does NOT start and it is NOT possible to reach the Main base or Emergency base:</u></span><span class="qa-dots" aria-hidden="true"></span></div>
+              <span class="empty-inline"></span>
+            </div>
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">11A. Emergency Landing Area</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q20" class="answer-input" type="text" maxlength="60" data-answer="Update" />
+            </div>
+            <div class="qa-row">
+              <div class="qa-label-wrap"><span class="qa-label">11B. Flight Mode</span><span class="qa-dots" aria-hidden="true"></span></div>
+              <input id="tab6-q21" class="answer-input" type="text" maxlength="40" data-answer="EMER" />
+            </div>
+
             <div class="end-flag">END</div>
+            <div class="footer-note">TRAINING ONLY</div>
           </section>
-
-        </article>
+        </div>
       </main>
     </div>
 
