@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ANKA Emergency Procedures / Checklists training module" />
+    <meta
+      name="description"
+      content="ANKA - Emergency Procedures / Checklists Training"
+    />
     <title>ANKA — Emergency Procedures / Checklists</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -18,7 +21,7 @@
           </div>
         </div>
 
-        <nav aria-label="Emergency procedure page navigation">
+        <nav aria-label="Navigasi halaman checklist">
           <ul class="page-nav-list">
             <li><button class="nav-btn active page-nav-btn" data-page-target="page-1" type="button">Page 1: ACT POSITION FAIL</button></li>
             <li><button class="nav-btn page-nav-btn" data-page-target="page-2" type="button">Page 2: ENG RPM HIGH</button></li>
@@ -46,7 +49,7 @@
 
         <div id="answer-panel" class="answer-panel hidden" aria-live="polite"></div>
 
-        <div class="stats" id="stats-container" style="display:none;">
+        <div class="stats" id="stats-container" style="display: none;">
           <h3>Hasil Evaluasi</h3>
           <p>Benar: <span id="stat-benar" class="text-green">0</span></p>
           <p>Salah: <span id="stat-salah" class="text-red">0</span></p>
@@ -61,7 +64,7 @@
 
       <main class="content">
         <div class="document-page" id="printable-area">
-          <div class="top-page-nav no-print" aria-label="Page tabs">
+          <div class="top-page-nav no-print" aria-label="Tab halaman">
             <button class="page-tab active" data-page-target="page-1" type="button">Page 1</button>
             <button class="page-tab" data-page-target="page-2" type="button">Page 2</button>
             <button class="page-tab" data-page-target="page-3" type="button">Page 3</button>
@@ -82,20 +85,23 @@
                 <span class="dotted-line" aria-hidden="true"></span>
                 <input type="text" id="p1_flight_mode" data-label="Flight Mode" autocomplete="off" />
               </div>
+
               <div class="fill-row">
                 <span class="prompt">2. Airspeed</span>
                 <span class="dotted-line" aria-hidden="true"></span>
                 <input type="text" id="p1_airspeed" data-label="Airspeed" autocomplete="off" />
               </div>
+
               <div class="fill-row">
                 <span class="prompt">3. Actuators (affected)</span>
                 <span class="dotted-line" aria-hidden="true"></span>
-                <input type="text" id="p1_actuator_1" data-label="Actuators (affected) 1" autocomplete="off" />
+                <input type="text" id="p1_actuator_1" data-label="Actuators (affected)" autocomplete="off" />
               </div>
+
               <div class="fill-row">
                 <span class="prompt">4. Actuators (affected)</span>
                 <span class="dotted-line" aria-hidden="true"></span>
-                <input type="text" id="p1_actuator_2" data-label="Actuators (affected) 2" autocomplete="off" />
+                <input type="text" id="p1_actuator_2" data-label="Actuators (affected)" autocomplete="off" />
               </div>
             </div>
 
@@ -178,21 +184,25 @@
                 <span class="dotted-line" aria-hidden="true"></span>
                 <input type="text" id="p2_flight_mode" data-label="Flight Mode" autocomplete="off" />
               </div>
+
               <div class="fill-row">
                 <span class="prompt">2. ENG THR</span>
                 <span class="dotted-line" aria-hidden="true"></span>
                 <input type="text" id="p2_eng_thr_1" data-label="ENG THR" autocomplete="off" />
               </div>
+
               <div class="fill-row">
                 <span class="prompt">3. Airspeed</span>
                 <span class="dotted-line" aria-hidden="true"></span>
                 <input type="text" id="p2_airspeed" data-label="Airspeed" autocomplete="off" />
               </div>
+
               <div class="fill-row">
                 <span class="prompt">4. ENG THR</span>
                 <span class="dotted-line" aria-hidden="true"></span>
-                <input type="text" id="p2_eng_thr_2" data-label="ENG THR 2" autocomplete="off" />
+                <input type="text" id="p2_eng_thr_2" data-label="ENG THR" autocomplete="off" />
               </div>
+
               <div class="fill-row">
                 <span class="prompt">5. ENG RPM</span>
                 <span class="dotted-line" aria-hidden="true"></span>
@@ -242,16 +252,19 @@
                 <span class="dotted-line" aria-hidden="true"></span>
                 <input type="text" id="p3_flight_mode" data-label="Flight Mode" autocomplete="off" />
               </div>
+
               <div class="fill-row">
                 <span class="prompt">2. ENG THR</span>
                 <span class="dotted-line" aria-hidden="true"></span>
                 <input type="text" id="p3_eng_thr" data-label="ENG THR" autocomplete="off" />
               </div>
+
               <div class="fill-row">
                 <span class="prompt">3. Fuel Pump</span>
                 <span class="dotted-line" aria-hidden="true"></span>
                 <input type="text" id="p3_fuel_pump" data-label="Fuel Pump" autocomplete="off" />
               </div>
+
               <div class="fill-row">
                 <span class="prompt">4. Non - Essential Electrical Loads</span>
                 <span class="dotted-line" aria-hidden="true"></span>
@@ -289,11 +302,13 @@
 
             <div class="list-conditional compact">
               <p>If LDG GRs are NOT extended:</p>
+
               <div class="fill-row small">
                 <span class="prompt">2. Fuel Quantity</span>
                 <span class="dotted-line" aria-hidden="true"></span>
                 <input type="text" id="p4_fuel_quantity" data-label="Fuel Quantity" autocomplete="off" />
               </div>
+
               <div class="fill-row small">
                 <span class="prompt">3. EO/IR Camera</span>
                 <span class="dotted-line" aria-hidden="true"></span>
