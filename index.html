@@ -282,7 +282,7 @@
             <div class="list-block">
               <p class="plain-title">Landing limitations</p>
               <div class="list-item"><span>Max CRAB angle at touchdown &lt;</span> <input class="answer-input inline-input" id="t1-70" type="text" data-answer="4°|4|4 deg" maxlength="10" /></div>
-              <div class="list-item"><span>Pitch angle at touchdown between</span> <input class="answer-input inline-input" id="t1-71" type="text" data-answer="-1°|-1| -1 deg" maxlength="10" /> <span>and</span> <input class="answer-input inline-input" id="t1-72" type="text" data-answer="7°|7|7 deg" maxlength="10" /></div>
+              <div class="list-item"><span>Pitch angle at touchdown between</span> <input class="answer-input inline-input" id="t1-71" type="text" data-answer="-1°|-1| -1 deg" maxlength="10" /> <span>and</span> <input class="answer-input inline-input" id="t1-72" type="text" data-answer="8°|8|8 deg" maxlength="10" /></div>
               <div class="list-item"><span>Max roll angle at touchdown &lt;</span> <input class="answer-input inline-input" id="t1-73" type="text" data-answer="8°|8|8 deg" maxlength="10" /></div>
               <div class="list-item"><span>Max deviation from centerline +/-</span> <input class="answer-input inline-input" id="t1-74" type="text" data-answer="7,5 meters|7.5 meters|7,5m|7.5m|7.5" maxlength="15" /></div>
             </div>
@@ -510,37 +510,159 @@
           <section class="page-section" data-page="tab-6">
             <div class="page-header">
               <span class="header-tag">TRAINING ONLY</span>
-              <span class="header-muted">PWR / ENGINE</span>
+              <span class="header-muted">ANKAID-T0544-AFM-2</span>
             </div>
 
-            <h1 class="page-title">EMER - ENG STOPPED</h1>
-            <div class="note-box">Engine stopped condition requires immediate stabilization, confirmation of engine status, and rapid decision for continued flight or immediate landing.</div>
+            <div class="title-block red">ENG STOPPED</div>
+            <div class="title-block yellow">ENG THRUST LOST</div>
+
+            <div class="objectives-box">
+              <ol>
+                <li>Both alternators may fail. In such condition batteries provide electrical power for about 30 minutes.</li>
+                <li>Systems powered by main and mission buses may automatically shut down.</li>
+                <li>GO AROUND is NOT an option during landing.</li>
+              </ol>
+            </div>
+
+            <div class="note-box" style="text-align: center;">Land as soon as practicable even if the failure message disappears.</div>
 
             <div class="qa-row">
-              <span class="qa-label">1. Flight Mode</span>
+              <span class="qa-label">1. THR Response</span>
               <span class="dots" aria-hidden="true"></span>
-              <input class="answer-input" id="t6-1" type="text" data-answer="HOLD - ROLL|HOLD ROLL|HOLD-ROLL" maxlength="35" />
+              <input class="answer-input" type="text" data-answer="Check|CHECK" maxlength="35" />
+            </div>
+
+            <div class="instruction-line"><u>If it is NOT possible to reach the Main Base or Emergency Base:</u></div>
+            <div class="qa-row">
+              <span class="qa-label"><u>2A.</u> Emergency Landing Area</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="Update|UPDATE" maxlength="35" />
             </div>
             <div class="qa-row">
-              <span class="qa-label">2. Engine status</span>
+              <span class="qa-label"><u>2B.</u> Flight Mode</span>
               <span class="dots" aria-hidden="true"></span>
-              <input class="answer-input" id="t6-2" type="text" data-answer="Confirm STOPPED|STOPPED|confirm stopped" maxlength="35" />
+              <input class="answer-input" type="text" data-answer="EMER" maxlength="25" />
+            </div>
+
+            <div class="instruction-line"><u>If it is possible to reach the Main Base or Emergency Base:</u></div>
+            <div class="qa-row">
+              <span class="qa-label"><u>2A.</u> Airspeed</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="GLIDE SPEED|GLIDE-SPEED|GLIDE SPEED" maxlength="35" />
+            </div>
+
+            <div class="warning-box caution-box">Before turning off WBS, ADT, and FLIR, consider data link status and quality. Switch them off within 2 minutes if both alternators fail to provide power, if needed.</div>
+
+            <div class="qa-row">
+              <span class="qa-label">3. WBS, ADT, and FLIR</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="Consider OFF within 2 minutes|CONSIDER OFF WITHIN 2 MINUTES|OFF within 2 minutes" maxlength="55" />
+            </div>
+
+            <div class="instruction-line"><u>If time and altitude permit for engine restart, perform the actions below:</u></div>
+            <div class="qa-row">
+              <span class="qa-label">4. Altitude</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="Below 13,000 ft MSL|BELOW 13,000 FT MSL|below 13000 ft msl" maxlength="35" />
+            </div>
+
+            <div class="instruction-line"><u>If engine does NOT start automatically:</u></div>
+            <div class="qa-row">
+              <span class="qa-label">5. FUEL PUMP</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="Verify ON|VERIFY ON|ON" maxlength="35" />
             </div>
             <div class="qa-row">
-              <span class="qa-label">3. Affected item</span>
+              <span class="qa-label">6. THR</span>
               <span class="dots" aria-hidden="true"></span>
-              <input class="answer-input" id="t6-3" type="text" data-answer="Propeller|PROPELLER" maxlength="25" />
+              <input class="answer-input" type="text" data-answer="IDLE" maxlength="25" />
+            </div>
+
+            <div class="instruction-line"><u>If RPM is above 600, repeat ENG STOP and START procedures:</u></div>
+            <div class="qa-row">
+              <span class="qa-label">7. ENG</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="STOP" maxlength="25" />
             </div>
             <div class="qa-row">
-              <span class="qa-label">4. Emergency action</span>
+              <span class="qa-label">8. ENG</span>
               <span class="dots" aria-hidden="true"></span>
-              <input class="answer-input" id="t6-4" type="text" data-answer="Land ASAP|LAND ASAP|LAND AS SOON AS PRACTICABLE" maxlength="45" />
+              <input class="answer-input" type="text" data-answer="START" maxlength="25" />
+            </div>
+
+            <div class="instruction-line"><u>If propeller does NOT start and RPM is below 600:</u></div>
+            <div class="qa-row">
+              <span class="qa-label">9. BUS</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="TIE" maxlength="25" />
+            </div>
+
+            <div class="warning-box caution-box">Do NOT engage starter more than 3 attempts if both alternators are unable to provide power.</div>
+
+            <div class="qa-row">
+              <span class="qa-label">10. STARTER</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="ON" maxlength="25" />
+            </div>
+
+            <div class="instruction-line"><u>If engine starts:</u></div>
+            <div class="qa-row">
+              <span class="qa-label"><u>11A.</u> BUS</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="Verify UNTIE|VERIFY UNTIE|UNTIE" maxlength="35" />
             </div>
             <div class="qa-row">
-              <span class="qa-label">5. Status</span>
+              <span class="qa-label">11B. Failure Messages</span>
               <span class="dots" aria-hidden="true"></span>
-              <input class="answer-input" id="t6-5" type="text" data-answer="DEGRADED|degraded" maxlength="25" />
+              <input class="answer-input" type="text" data-answer="Check|CHECK" maxlength="35" />
             </div>
+            <div class="qa-row">
+              <span class="qa-label">11C. Engine RPM and Throttle</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="Check|CHECK" maxlength="35" />
+            </div>
+            <div class="qa-row">
+              <span class="qa-label">11D.</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="LAND AS SOON AS PRACTICABLE|LAND AS SOON AS PRACTICABLE" maxlength="45" />
+            </div>
+
+            <div class="warning-box caution-box">Pilot is responsible for choosing a suitable emergency landing area.</div>
+
+            <div class="instruction-line"><u>If engine does NOT start and it is possible to reach the Main base or Emergency base:</u></div>
+            <div class="qa-row">
+              <span class="qa-label"><u>11A.</u> RTB and Emergency Landing Area</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="Update|UPDATE" maxlength="35" />
+            </div>
+
+            <div class="warning-box caution-box">Enter Recovery Initiation Window above the glideslope.</div>
+
+            <div class="qa-row">
+              <span class="qa-label">11B. AUTOLAND</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="Verify DEGRADED|VERIFY DEGRADED|DEGRADED" maxlength="35" />
+            </div>
+            <div class="qa-row">
+              <span class="qa-label">11C.</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="LAND AS SOON AS POSSIBLE|LAND AS SOON AS POSSIBLE" maxlength="45" />
+            </div>
+
+            <div class="instruction-line"><u>If engine does NOT start and it is NOT possible to reach the Main base or Emergency base:</u></div>
+            <div class="qa-row">
+              <span class="qa-label"><u>11A.</u> Emergency Landing Area</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="Update|UPDATE" maxlength="35" />
+            </div>
+            <div class="qa-row">
+              <span class="qa-label"><u>11B.</u> Flight Mode</span>
+              <span class="dots" aria-hidden="true"></span>
+              <input class="answer-input" type="text" data-answer="EMER" maxlength="25" />
+            </div>
+
+            <div class="end-flag" style="color: var(--red-dark);">END</div>
+            <div class="end-flag" style="color: var(--red-dark); margin-top: 8px; letter-spacing: 0.08em;">TRAINING ONLY</div>
           </section>
         </div>
       </main>
