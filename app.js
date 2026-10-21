@@ -80,7 +80,14 @@ let currentMode = 'latihan';
 let showingAnswers = false;
 
 function normalize(value) {
-  return String(value || '').toLowerCase().replace(/\s+/g, '').trim();
+  return String(value || '')
+    .toLowerCase()
+    .replace(/°/g, 'deg')
+    .replace(/±/g, '+/-')
+    .replace(/\s+/g, '')
+    .replace(/,/g, '.')
+    .replace(/\+/g, 'plus')
+    .trim();
 }
 
 function getAllInputs() {
@@ -115,6 +122,26 @@ function loadAnswers() {
     if (input) input.value = value;
   });
   updateProgress();
+}
+
+function insertQuickText(value) {
+  const activeInput = document.activeElement && document.activeElement.matches('input[type="text"]')
+    ? document.activeElement
+    : null;
+
+  if (!activeInput) {
+    return;
+  }
+
+  const start = activeInput.selectionStart || 0;
+  const end = activeInput.selectionEnd || 0;
+  const current = activeInput.value || '';
+  const nextValue = current.slice(0, start) + value + current.slice(end);
+  activeInput.value = nextValue;
+  const cursorPosition = start + value.length;
+  activeInput.focus();
+  activeInput.setSelectionRange(cursorPosition, cursorPosition);
+  activeInput.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
 function checkAnswers() {
@@ -193,16 +220,19 @@ function toggleAnswers() {
       }
     });
     showingAnswers = true;
-    document.getElementById('btn-toggle-ans').textContent = 'Sembunyikan Jawaban';
+    const btn = document.getElementById('btn-toggle-ans');
+    if (btn) btn.textContent = 'Sembunyikan Jawaban';
   } else {
     document.querySelectorAll('.correction-text').forEach((el) => el.remove());
     inputs.forEach((input) => {
       input.classList.remove('correct', 'incorrect');
     });
     loadAnswers();
-    document.getElementById('stats-container').style.display = 'none';
+    const stats = document.getElementById('stats-container');
+    if (stats) stats.style.display = 'none';
     showingAnswers = false;
-    document.getElementById('btn-toggle-ans').textContent = 'Tampilkan Jawaban';
+    const btn = document.getElementById('btn-toggle-ans');
+    if (btn) btn.textContent = 'Tampilkan Jawaban';
   }
 
   saveAnswers();
@@ -219,8 +249,10 @@ function resetTraining() {
     input.classList.remove('correct', 'incorrect');
   });
   document.querySelectorAll('.correction-text').forEach((el) => el.remove());
-  document.getElementById('stats-container').style.display = 'none';
-  document.getElementById('btn-koreksi').disabled = false;
+  const stats = document.getElementById('stats-container');
+  if (stats) stats.style.display = 'none';
+  const btn = document.getElementById('btn-koreksi');
+  if (btn) btn.disabled = false;
   showingAnswers = false;
   updateProgress();
 }
@@ -265,6 +297,13 @@ function bindEvents() {
           correction.remove();
         }
       }
+    });
+  });
+
+  document.querySelectorAll('.quick-btn').forEach((button) => {
+    button.addEventListener('click', () => {
+      const value = button.dataset.insert || '';
+      insertQuickText(value);
     });
   });
 
