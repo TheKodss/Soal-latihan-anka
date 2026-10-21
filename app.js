@@ -94,6 +94,52 @@ function getAllInputs() {
   return [...document.querySelectorAll('input[type="text"]')];
 }
 
+function getFieldLabel(id) {
+  const field = document.getElementById(id);
+  if (!field) return id;
+
+  const prev = field.closest('.qa-row');
+  if (prev) {
+    const label = prev.querySelector('span');
+    if (label) return label.textContent.trim();
+  }
+
+  const td = field.closest('td');
+  if (td && td.previousElementSibling) {
+    const text = td.previousElementSibling.textContent.trim();
+    if (text) return text;
+  }
+
+  return id;
+}
+
+function renderAnswerPanel() {
+  const panel = document.getElementById('answer-panel');
+  if (!panel) return;
+
+  const rows = Object.entries(answerKey)
+    .map(([id, options]) => {
+      const label = getFieldLabel(id);
+      const firstAnswer = options[0] || '—';
+      return `<li><strong>${label}</strong><span>${firstAnswer}</span></li>`;
+    })
+    .join('');
+
+  panel.innerHTML = `
+    <h3>Kunci Jawaban</h3>
+    <ul>${rows}</ul>
+  `;
+  panel.classList.remove('hidden');
+}
+
+function hideAnswerPanel() {
+  const panel = document.getElementById('answer-panel');
+  if (panel) {
+    panel.classList.add('hidden');
+    panel.innerHTML = '';
+  }
+}
+
 function updateProgress() {
   const inputs = getAllInputs();
   const answered = inputs.filter((input) => input.value.trim() !== '').length;
@@ -142,15 +188,13 @@ function insertQuickText(value) {
   activeInput.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
-function removeAnswerHints() {
-  document.querySelectorAll('.answer-reveal').forEach((el) => el.remove());
-}
-
 function checkAnswers() {
   if (currentMode === 'ujian') {
     const confirmed = window.confirm('Anda yakin ingin menyelesaikan ujian dan melihat hasil?');
     if (!confirmed) return;
   }
+
+  hideAnswerPanel();
 
   let correctCount = 0;
   let wrongCount = 0;
@@ -158,7 +202,6 @@ function checkAnswers() {
   const inputs = getAllInputs();
 
   document.querySelectorAll('.correction-text').forEach((el) => el.remove());
-  removeAnswerHints();
 
   inputs.forEach((input) => {
     const id = input.id;
@@ -212,37 +255,17 @@ function checkAnswers() {
 }
 
 function toggleAnswers() {
-  const inputs = getAllInputs();
-
   if (!showingAnswers) {
-    removeAnswerHints();
-    inputs.forEach((input) => {
-      const key = answerKey[input.id];
-      if (!input.value && key) {
-        const note = document.createElement('span');
-        note.className = 'answer-reveal no-print';
-        note.textContent = `Jawaban: ${key[0]}`;
-        input.parentNode.insertBefore(note, input.nextSibling);
-      }
-    });
+    renderAnswerPanel();
     showingAnswers = true;
     const btn = document.getElementById('btn-toggle-ans');
     if (btn) btn.textContent = 'Sembunyikan Jawaban';
   } else {
-    document.querySelectorAll('.correction-text').forEach((el) => el.remove());
-    removeAnswerHints();
-    inputs.forEach((input) => {
-      input.classList.remove('correct', 'incorrect');
-    });
-    loadAnswers();
-    const stats = document.getElementById('stats-container');
-    if (stats) stats.style.display = 'none';
+    hideAnswerPanel();
     showingAnswers = false;
     const btn = document.getElementById('btn-toggle-ans');
     if (btn) btn.textContent = 'Tampilkan Jawaban';
   }
-
-  saveAnswers();
 }
 
 function resetTraining() {
@@ -256,12 +279,14 @@ function resetTraining() {
     input.classList.remove('correct', 'incorrect');
   });
   document.querySelectorAll('.correction-text').forEach((el) => el.remove());
-  removeAnswerHints();
+  hideAnswerPanel();
   const stats = document.getElementById('stats-container');
   if (stats) stats.style.display = 'none';
   const btn = document.getElementById('btn-koreksi');
   if (btn) btn.disabled = false;
   showingAnswers = false;
+  const btnToggle = document.getElementById('btn-toggle-ans');
+  if (btnToggle) btnToggle.textContent = 'Tampilkan Jawaban';
   updateProgress();
 }
 
@@ -270,6 +295,7 @@ function setMode(mode) {
   document.getElementById('nav-latihan').classList.remove('active');
   document.getElementById('nav-ujian').classList.remove('active');
   document.getElementById(`nav-${mode}`).classList.add('active');
+  hideAnswerPanel();
 
   const btnKoreksi = document.getElementById('btn-koreksi');
   const btnToggle = document.getElementById('btn-toggle-ans');
@@ -277,7 +303,6 @@ function setMode(mode) {
   if (mode === 'ujian') {
     btnToggle.style.display = 'none';
     document.querySelectorAll('.correction-text').forEach((el) => el.remove());
-    removeAnswerHints();
     document.getElementById('stats-container').style.display = 'none';
     getAllInputs().forEach((input) => {
       input.classList.remove('correct', 'incorrect');
@@ -285,6 +310,7 @@ function setMode(mode) {
     });
     btnKoreksi.disabled = false;
     btnKoreksi.textContent = 'Selesai & Koreksi';
+    showingAnswers = false;
   } else {
     btnToggle.style.display = 'block';
     getAllInputs().forEach((input) => {
@@ -292,19 +318,21 @@ function setMode(mode) {
     });
     btnKoreksi.disabled = false;
     btnKoreksi.textContent = 'Koreksi Jawaban';
+    showingAnswers = false;
   }
+
+  if (btnToggle) btnToggle.textContent = 'Tampilkan Jawaban';
 }
 
 function bindEvents() {
   getAllInputs().forEach((input) => {
     input.addEventListener('input', () => {
       saveAnswers();
-      if (currentMode === 'latihan' && showingAnswers) {
-        input.classList.remove('correct', 'incorrect');
-        const correction = input.nextElementSibling;
-        if (correction && correction.classList.contains('correction-text')) {
-          correction.remove();
-        }
+      hideAnswerPanel();
+      if (showingAnswers) {
+        showingAnswers = false;
+        const btnToggle = document.getElementById('btn-toggle-ans');
+        if (btnToggle) btnToggle.textContent = 'Tampilkan Jawaban';
       }
     });
   });
@@ -325,6 +353,7 @@ function bindEvents() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  hideAnswerPanel();
   loadAnswers();
   bindEvents();
 });
