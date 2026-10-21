@@ -129,9 +129,7 @@ function insertQuickText(value) {
     ? document.activeElement
     : null;
 
-  if (!activeInput) {
-    return;
-  }
+  if (!activeInput) return;
 
   const start = activeInput.selectionStart || 0;
   const end = activeInput.selectionEnd || 0;
@@ -142,6 +140,10 @@ function insertQuickText(value) {
   activeInput.focus();
   activeInput.setSelectionRange(cursorPosition, cursorPosition);
   activeInput.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function removeAnswerHints() {
+  document.querySelectorAll('.answer-reveal').forEach((el) => el.remove());
 }
 
 function checkAnswers() {
@@ -156,6 +158,7 @@ function checkAnswers() {
   const inputs = getAllInputs();
 
   document.querySelectorAll('.correction-text').forEach((el) => el.remove());
+  removeAnswerHints();
 
   inputs.forEach((input) => {
     const id = input.id;
@@ -212,11 +215,14 @@ function toggleAnswers() {
   const inputs = getAllInputs();
 
   if (!showingAnswers) {
+    removeAnswerHints();
     inputs.forEach((input) => {
       const key = answerKey[input.id];
       if (!input.value && key) {
-        input.value = key[0];
-        input.classList.add('correct');
+        const note = document.createElement('span');
+        note.className = 'answer-reveal no-print';
+        note.textContent = `Jawaban: ${key[0]}`;
+        input.parentNode.insertBefore(note, input.nextSibling);
       }
     });
     showingAnswers = true;
@@ -224,6 +230,7 @@ function toggleAnswers() {
     if (btn) btn.textContent = 'Sembunyikan Jawaban';
   } else {
     document.querySelectorAll('.correction-text').forEach((el) => el.remove());
+    removeAnswerHints();
     inputs.forEach((input) => {
       input.classList.remove('correct', 'incorrect');
     });
@@ -249,6 +256,7 @@ function resetTraining() {
     input.classList.remove('correct', 'incorrect');
   });
   document.querySelectorAll('.correction-text').forEach((el) => el.remove());
+  removeAnswerHints();
   const stats = document.getElementById('stats-container');
   if (stats) stats.style.display = 'none';
   const btn = document.getElementById('btn-koreksi');
@@ -269,6 +277,7 @@ function setMode(mode) {
   if (mode === 'ujian') {
     btnToggle.style.display = 'none';
     document.querySelectorAll('.correction-text').forEach((el) => el.remove());
+    removeAnswerHints();
     document.getElementById('stats-container').style.display = 'none';
     getAllInputs().forEach((input) => {
       input.classList.remove('correct', 'incorrect');
