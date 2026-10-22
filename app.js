@@ -10,10 +10,14 @@ function normalize(value) {
     .replace(/\u00A0/g, ' ')
     .trim()
     .toLowerCase()
+    .replace(/[\u00b0\u00ba]/g, '')
     .replace(/[_-]/g, ' ')
+    .replace(/kias|kts|knots?|deg|degrees|km|kgs?|kg|psi|bar|ft|msl|v|volts?|amps?|c|percent|vs|%/g, ' ')
     .replace(/[,]/g, '.')
     .replace(/\./g, '')
-    .replace(/\s+/g, ' ');
+    .replace(/[^0-9+\-\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function exactAnswerMatch(answer, value) {
