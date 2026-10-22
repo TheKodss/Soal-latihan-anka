@@ -16,6 +16,21 @@ function normalize(value) {
     .replace(/\s+/g, ' ');
 }
 
+function exactAnswerMatch(answer, value) {
+  return normalize(answer) === normalize(value);
+}
+
+function numericAnswerMatch(answer, value) {
+  const answerDigits = String(answer || '').replace(/[^\d-]/g, '');
+  const valueDigits = String(value || '').replace(/[^\d-]/g, '');
+
+  return Boolean(answerDigits && valueDigits && answerDigits === valueDigits);
+}
+
+function isAnswerCorrect(answer, value) {
+  return exactAnswerMatch(answer, value) || numericAnswerMatch(answer, value);
+}
+
 function getAllInputs() {
   return [...document.querySelectorAll('.answer-input')];
 }
@@ -94,7 +109,7 @@ function evaluateAnswers() {
       .map((item) => item.trim())
       .filter(Boolean);
 
-    const isCorrect = accepted.some((answer) => normalize(answer) === normalize(value));
+    const isCorrect = accepted.some((answer) => isAnswerCorrect(answer, value));
 
     if (isCorrect) {
       correct += 1;
@@ -196,7 +211,7 @@ function checkAnswers() {
       return;
     }
 
-    const isCorrect = accepted.some((answer) => normalize(answer) === normalize(value));
+    const isCorrect = accepted.some((answer) => isAnswerCorrect(answer, value));
     if (isCorrect) {
       input.classList.add('correct');
       correct += 1;
@@ -290,4 +305,3 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('beforeunload', () => {
   saveAnswers();
 });
-
